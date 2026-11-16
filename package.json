@@ -1,0 +1,28 @@
+{
+  "name": "web-blueprint",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "AI-assisted web application blueprint, engineering standards, cross-tool adapters, and fullstack reference application (Atölye Pusula).",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "doctor": "node scripts/doctor.mjs",
+    "sync:adapters": "node scripts/sync-adapters.mjs",
+    "check:adapters": "node scripts/sync-adapters.mjs --check",
+    "create:project": "node scripts/create-project.mjs",
+    "test:adapters": "node --test tests/adapter-sync.test.mjs",
+    "test:repo": "node --test tests/repo-structure.test.mjs tests/generator-smoke.test.mjs tests/adapter-sync.test.mjs",
+    "fullstack:install": "npm --prefix templates/fullstack ci",
+    "fullstack:dev": "npm --prefix templates/fullstack run dev",
+    "fullstack:lint": "npm --prefix templates/fullstack run lint",
+    "fullstack:typecheck": "npm --prefix templates/fullstack run typecheck",
+    "fullstack:test": "npm --prefix templates/fullstack run test",
+    "fullstack:e2e": "npm --prefix templates/fullstack run test:e2e",
+    "fullstack:build": "npm --prefix templates/fullstack run build",
+    "fullstack:migrate": "npm --prefix templates/fullstack run db:migrate",
+    "fullstack:seed": "npm --prefix templates/fullstack run db:seed",
+    "verify": "node scripts/verify-all.mjs"
+  }
+}
