@@ -1,0 +1,19 @@
+# Commit-scoped Gitleaks false-positive exceptions for initial repository commit (e0ea4d9f371f08c6e66ecbb4a9bfc81cdb9d4b1c).
+# Every fingerprint below is pinned strictly to the specific historical commit, file, rule, and line
+# rather than disabling rules globally. Future commits use dynamically constructed non-secret test strings.
+#
+# Evidence: GitHub Actions run 43906928050 (2026-11-16)
+# Owner: @Ali8183
+# Rationale: Synthetic unit/smoke test SESSION_SECRET strings and brief prose falsely matched generic-api-key.
+# Review Date: 2027-05-16
+e0ea4d9f371f08c6e66ecbb4a9bfc81cdb9d4b1c:examples/briefs/02-local-business-booking.md:generic-api-key:21
+e0ea4d9f371f08c6e66ecbb4a9bfc81cdb9d4b1c:tests/generator-smoke.test.mjs:generic-api-key:88
+e0ea4d9f371f08c6e66ecbb4a9bfc81cdb9d4b1c:templates/fullstack/tests/integration/security-and-ops.test.ts:generic-api-key:51
+e0ea4d9f371f08c6e66ecbb4a9bfc81cdb9d4b1c:templates/fullstack/tests/integration/security-and-ops.test.ts:generic-api-key:59
+e0ea4d9f371f08c6e66ecbb4a9bfc81cdb9d4b1c:templates/fullstack/tests/integration/hardening.test.ts:generic-api-key:94
+e0ea4d9f371f08c6e66ecbb4a9bfc81cdb9d4b1c:templates/fullstack/tests/integration/hardening.test.ts:generic-api-key:287
+e0ea4d9f371f08c6e66ecbb4a9bfc81cdb9d4b1c:templates/fullstack/tests/integration/hardening.test.ts:generic-api-key:295
+e0ea4d9f371f08c6e66ecbb4a9bfc81cdb9d4b1c:templates/fullstack/tests/integration/hardening.test.ts:generic-api-key:444
+e0ea4d9f371f08c6e66ecbb4a9bfc81cdb9d4b1c:templates/fullstack/tests/integration/hardening.test.ts:generic-api-key:452
+e0ea4d9f371f08c6e66ecbb4a9bfc81cdb9d4b1c:templates/fullstack/tests/integration/hardening.test.ts:generic-api-key:487
+e0ea4d9f371f08c6e66ecbb4a9bfc81cdb9d4b1c:templates/fullstack/tests/integration/hardening.test.ts:generic-api-key:561

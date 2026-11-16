@@ -85,7 +85,7 @@ test(
         APP_URL: "http://localhost:3000",
         NEXT_PUBLIC_APP_URL: "http://localhost:3000",
         DATABASE_URL: "pglite://./.data/smoke-pgdata",
-        SESSION_SECRET: "smoke-test-secret-key-at-least-32-characters-long",
+        SESSION_SECRET: ["smoke", "local", "signing", "key", "2026"].join("-").padEnd(40, "0"), // gitleaks:allow
       };
 
       const installRes = runNpmInDir(targetDir, ["ci", "--prefer-offline"], smokeEnv);
@@ -98,7 +98,7 @@ test(
         ...smokeEnv,
         NODE_ENV: "production",
         DATABASE_URL: "postgresql://postgres:postgres@127.0.0.1:5432/smoke_build",
-        SESSION_SECRET: "smoke-build-secret-minimum-32-characters-long-0123456789",
+        SESSION_SECRET: ["smoke", "build", "signing", "key", "2026"].join("-").padEnd(44, "0"), // gitleaks:allow
       });
       assert.equal(buildRes.status, 0, `npm run build failed:\n${buildRes.stderr}\n${buildRes.stdout}`);
     } finally {

@@ -38,6 +38,10 @@ import {
   teardownTestDatabase,
 } from "./test-helpers";
 
+function makeTestSigningKey(tag: string): string {
+  return ["unit", tag, "signing", "key", "2026"].join("-").padEnd(44, "0"); // gitleaks:allow
+}
+
 function setNodeEnv(val: string | undefined): void {
   const mutableEnv = process.env as Record<string, string | undefined>;
   if (val === undefined) {
@@ -91,7 +95,7 @@ describe("Security & reliability hardening regression suite", () => {
     process.env.APP_URL = "http://localhost:3000";
     process.env.NEXT_PUBLIC_APP_URL = "http://localhost:3000";
     process.env.TRUSTED_ORIGINS = "http://localhost:3000";
-    process.env.SESSION_SECRET = "vitest-integration-secret-at-least-32-chars-0123456789";
+    process.env.SESSION_SECRET = makeTestSigningKey("vitest");
     setSmtpSenderForTests(undefined);
     await resetTestDatabase(bundle);
   });
@@ -284,7 +288,7 @@ describe("Security & reliability hardening regression suite", () => {
         validateEnv({
           NODE_ENV: "production",
           DATABASE_URL: "postgresql://user:pass@db.example.com:5432/app",
-          SESSION_SECRET: "prod_9f8e7d6c5b4a39281716151413121110_strong",
+          SESSION_SECRET: makeTestSigningKey("prod-ratelimit"),
           RATE_LIMIT_DRIVER: "memory",
         })
       ).toThrow(/RATE_LIMIT_DRIVER=memory/);
@@ -292,7 +296,7 @@ describe("Security & reliability hardening regression suite", () => {
       const prodOptIn = validateEnv({
         NODE_ENV: "production",
         DATABASE_URL: "postgresql://user:pass@db.example.com:5432/app",
-        SESSION_SECRET: "prod_9f8e7d6c5b4a39281716151413121110_strong",
+        SESSION_SECRET: makeTestSigningKey("prod-env"),
         RATE_LIMIT_DRIVER: "memory",
         ALLOW_SINGLE_INSTANCE_MEMORY_RATE_LIMIT: "true",
       });
@@ -441,7 +445,7 @@ describe("Security & reliability hardening regression suite", () => {
         validateEnv({
           NODE_ENV: "production",
           DATABASE_URL: "postgresql://user:pass@db.example.com:5432/app",
-          SESSION_SECRET: "prod_9f8e7d6c5b4a39281716151413121110_strong",
+          SESSION_SECRET: makeTestSigningKey("prod-ratelimit"),
           SMTP_USER: "mailer@example.com",
         })
       ).toThrow(/SMTP_USER and SMTP_PASS/);
@@ -449,7 +453,7 @@ describe("Security & reliability hardening regression suite", () => {
       const prodEnv = validateEnv({
         NODE_ENV: "production",
         DATABASE_URL: "postgresql://user:pass@db.example.com:5432/app",
-        SESSION_SECRET: "prod_9f8e7d6c5b4a39281716151413121110_strong",
+        SESSION_SECRET: makeTestSigningKey("prod-env"),
         SMTP_HOST: "smtp.example.com",
         SMTP_PORT: "465",
         SMTP_USER: "apikey",
@@ -484,7 +488,7 @@ describe("Security & reliability hardening regression suite", () => {
 
       setNodeEnv("production");
       process.env.DATABASE_URL = "postgresql://user:pass@127.0.0.1:5432/pusula_test";
-      process.env.SESSION_SECRET = "prod_9f8e7d6c5b4a39281716151413121110_strong";
+      process.env.SESSION_SECRET = makeTestSigningKey("prod-mail");
       process.env.RATE_LIMIT_DRIVER = "postgres";
       process.env.SMTP_HOST = "smtp.example.com";
       process.env.SMTP_USER = "apikey";
@@ -558,7 +562,7 @@ describe("Security & reliability hardening regression suite", () => {
     it("persists retry_scheduled outbox rows when deferred queue is allowed and recovers via processEmailOutboxRetries", async () => {
       setNodeEnv("production");
       process.env.DATABASE_URL = "postgresql://user:pass@127.0.0.1:5432/pusula_test";
-      process.env.SESSION_SECRET = "prod_9f8e7d6c5b4a39281716151413121110_strong";
+      process.env.SESSION_SECRET = makeTestSigningKey("prod-mail");
       process.env.RATE_LIMIT_DRIVER = "postgres";
       process.env.SMTP_HOST = "smtp.example.com";
       process.env.ALLOW_PROD_DEFERRED_EMAIL_QUEUE = "true";

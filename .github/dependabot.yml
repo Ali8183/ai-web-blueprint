@@ -11,6 +11,14 @@ updates:
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 10
+    ignore:
+      # eslint-config-next@16.4.6 and typescript-eslint require ESLint <10, TypeScript <6.1, and Node 24 types.
+      - dependency-name: "eslint"
+        versions: [">= 10.0.0"]
+      - dependency-name: "typescript"
+        versions: [">= 6.0.0"]
+      - dependency-name: "@types/node"
+        versions: [">= 25.0.0"]
     groups:
       dev-dependencies:
         dependency-type: "development"
@@ -20,3 +28,7 @@ updates:
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 5
+    groups:
+      codeql-action:
+        patterns:
+          - "github/codeql-action*"

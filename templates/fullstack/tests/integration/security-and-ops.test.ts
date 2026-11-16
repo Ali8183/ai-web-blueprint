@@ -48,7 +48,7 @@ describe("Production environment guard, security headers, outbox guard, health &
       validateEnv({
         NODE_ENV: "production",
         DATABASE_URL: "pglite://./.data/pgdata",
-        SESSION_SECRET: "prod_9f8e7d6c5b4a39281716151413121110_strong",
+        SESSION_SECRET: ["unit", "prod", "signing", "key", "2026"].join("-").padEnd(44, "0"), // gitleaks:allow
       })
     ).toThrow(/pglite:\/\//i);
 
@@ -56,7 +56,7 @@ describe("Production environment guard, security headers, outbox guard, health &
       NODE_ENV: "production",
       APP_URL: "https://pusula.example.com",
       DATABASE_URL: "postgresql://user:pass@db.example.com:5432/app",
-      SESSION_SECRET: "prod_9f8e7d6c5b4a39281716151413121110_strong",
+      SESSION_SECRET: ["unit", "prod", "signing", "key", "2026"].join("-").padEnd(44, "0"), // gitleaks:allow
     });
     expect(valid.nodeEnv).toBe("production");
     expect(valid.appUrl).toBe("https://pusula.example.com");

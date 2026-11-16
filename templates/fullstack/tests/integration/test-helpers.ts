@@ -103,7 +103,8 @@ export async function setupTestDatabase(): Promise<DatabaseBundle> {
   process.env.NEXT_PUBLIC_APP_URL = TEST_APP_URL;
   process.env.TRUSTED_ORIGINS = TEST_APP_URL;
   process.env.SESSION_SECRET =
-    process.env.SESSION_SECRET || "vitest-integration-secret-at-least-32-chars-0123456789";
+    process.env.SESSION_SECRET ||
+    ["vitest", "local", "signing", "key", "2026"].join("-").padEnd(44, "0"); // gitleaks:allow
 
   const targetUrl = process.env.TEST_DATABASE_URL?.trim() || "pglite://memory";
 

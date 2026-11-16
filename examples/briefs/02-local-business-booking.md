@@ -18,7 +18,7 @@
    - Roles: `customer` (public/token or self-service), `staff` (manage own schedule & check-in), `owner` (manage all barbers, services, pricing, policies).
 3. **Data Model & Sensitive PII:**
    - Entities: `studios` (stores `ianaTimezone`, e.g. `Europe/Istanbul`), `services` (`durationMinutes`, `priceCents INTEGER`—never float!), `staffMembers`, `availabilityRules`, `bookings` (`startsAtUtc TIMESTAMPTZ`, `endsAtUtc TIMESTAMPTZ`, `status`, `cancellationCutoffUtc TIMESTAMPTZ`).
-   - PII: Customer name, email, phone number (`bookings`), staff email/password hash. Retention: anonymize/purge inactive booking contact details after 18 months (`[ASSUMPTION]`).
+   - PII: Customer name, email, phone number (`bookings`), and staff email + credential digest. Inactive booking contact details are anonymized or purged after 18 months (`[ASSUMPTION]`).
 4. **Integrations & Multi-Tenancy:** Single-studio or multi-branch (`studioId` scope on all staff/booking queries); transactional email confirmations/cancellations via Mailpit (dev) / SMTP (prod). **Out of scope in v1:** online card payments (pay-in-person at studio; triggers payment checklist if added later).
 5. **Budget, Traffic & Hosting:** Containerized Node.js + Managed PostgreSQL, ~500 daily slot lookups, ~80 bookings/day.
 6. **Language, Brand & Accessibility:** Turkish primary (`Europe/Istanbul`), warm utilitarian barbershop ledger aesthetic, WCAG 2.2 AA (`aria-live` announcements when slots update).
